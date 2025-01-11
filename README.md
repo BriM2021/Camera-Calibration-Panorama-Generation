@@ -15,39 +15,106 @@ This project involves performing camera calibration using a chessboard pattern t
 
 2. **Tasks**:
 
-### 1. **Intrinsic Camera Parameters (5 points)**
+### 1. **Intrinsic Camera Parameters **
    - Report the **estimated intrinsic camera parameters**, which include:
      - **Focal length(s)**
      - **Skew parameter**
      - **Principal point**
    - Include error estimates if available for these parameters.
 
-### 2. **Extrinsic Camera Parameters (5 points)**
+### 2. **Extrinsic Camera Parameters **
    - Report the **estimated extrinsic camera parameters** for each selected image, including:
      - **Rotation matrix**
      - **Translation vector**
 
-### 3. **Radial Distortion Coefficients (5 points)**
+### 3. **Radial Distortion Coefficients **
    - Report the **estimated radial distortion coefficients** for the camera.
    - Use the radial distortion coefficients to **undistort** 5 of the raw images.
    - Include the original and undistorted images in your report.
    - Observe how straight lines at the corners of the images change after applying the distortion coefficients. Comment briefly on this observation.
 
-### 4. **Re-projection Error (5 points)**
+### 4. **Re-projection Error **
    - Compute and report the **re-projection error** for each of the 25 selected images using the estimated intrinsic and extrinsic parameters.
    - Plot the re-projection error using a **bar chart**.
    - Report the **mean** and **standard deviation** of the re-projection error.
 
-### 5. **Corner Detection and Re-projection (10 points)**
+### 5. **Corner Detection and Re-projection **
    - Plot figures showing:
      - The corners detected in the original images.
      - The corners after re-projection onto the images for all the 25 images.
    - Comment on how the re-projection error is computed and its significance.
 
-### 6. **Checkerboard Plane Normals (10 points)**
+### 6. **Checkerboard Plane Normals **
    - Compute the **checkerboard plane normals** (`n_Ci`) for each of the 25 selected images in the **camera coordinate frame of reference** (`Oc`).
 
 ---
+
+# Camera-LIDAR Cross-Calibration Project
+
+In this project, you will perform a cross-calibration between a monocular camera and a LIDAR sensor mounted on an autonomous vehicle. The dataset includes RGB images, corresponding LIDAR scans, camera calibration parameters (intrinsic parameters, extrinsic parameters, and distortion coefficients from OpenCV), and checkerboard plane normals in the camera reference frame.
+
+The objective of this project is to find the invertible Euclidean transformation (3D rotation and 3D translation) between the camera and LIDAR coordinate frames.
+
+## Dataset
+
+- The dataset contains:
+  - RGB images
+  - Corresponding LIDAR scans
+  - Camera calibration parameters (intrinsic, extrinsic, and distortion coefficients)
+  - Checkerboard plane normals in the camera reference frame (`n_Ci`)
+  
+You can select any **25 corresponding image and LIDAR data points** for this assignment. The chessboard box size is **108mm**.
+
+## Tasks:
+
+### 1. **Compute the Chessboard Plane Normals and Offsets **
+
+   - For each of the **25 selected LIDAR scans**, compute the chessboard plane normals `n_Li` and corresponding offsets `di`.  
+   - These can be estimated by utilizing **Singular Value Decomposition (SVD)** on the planar LIDAR points in each `.pcd` file. 
+   
+### 2. **Derive the Transformation Equations **
+
+   - You will need to compute the Euclidean transformation `CTL = [CRL | CtL]` from the LIDAR frame to the camera frame.  
+   - The transformation matrix consists of a **rotation matrix** (`CRL`) and a **translation vector** (`CtL`).
+   - You have the plane normals `n_Ci` in the camera frame and `n_Li` in the LIDAR frame for all selected images.
+   - Derive the set of equations that can be used to estimate this transformation. 
+   - Explain the method for calculating the rotation and translation matrices.
+   
+   **Hint:** You may refer to the thesis (Section 5) for deriving the necessary equations.
+
+### 3. **Estimate the Transformation **
+
+   - Using the derived equations from the previous step, implement the function that estimates the transformation `CTe_L`. 
+   - Ensure that the **rotation matrix** has a determinant of **+1**.
+
+### 4. **Mapping LIDAR Points to Camera Frame **
+
+   - Use the estimated transformation `CTe_L` to map the LIDAR points to the **camera frame of reference**.
+   - Project these LIDAR points to the **image plane** using the **intrinsic camera parameters**.
+   - Check if all the mapped points fall within the boundary of the checkerboard pattern in each image.
+
+### 5. **Visualization and Error Computation **
+
+   - For any **5 selected image and LIDAR scan pairs**, plot the following vectors:
+     - **LIDAR normals (`n_Li`)**
+     - **Camera normals (`n_Ci`)**
+     - **Transformed LIDAR normals (`CRLn_Li`)**
+   
+   - Compute the **cosine distance** between the camera normal `n_Ci` and the transformed LIDAR normal `CRLn_Li` for **all 38 image and LIDAR scan pairs**.
+   - Plot a **histogram** of these cosine errors.
+   - Report the **average error** along with the **standard deviation** of these errors.
+
+---
+
+## Important Notes:
+- The size of the **chessboard box** is **108mm**.
+- Use **Singular Value Decomposition (SVD)** for plane normal estimation from the LIDAR points.
+- Carefully calculate the **rotation** and **translation** matrices for the transformation from the LIDAR frame to the camera frame.
+- Ensure that the **rotation matrix** has a determinant of **+1**.
+
+<img width="689" alt="image" src="https://github.com/user-attachments/assets/6497d26a-c54b-447e-beeb-ef5805e90d27" />    
+
+
 
 
 
