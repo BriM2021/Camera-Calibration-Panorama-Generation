@@ -1,3 +1,56 @@
+# Camera Calibration Project
+
+This project involves performing camera calibration using a chessboard pattern to estimate the intrinsic and extrinsic parameters of the camera, as well as to study the radial distortion and re-projection errors. The goal is to understand and apply the principles of camera calibration to real-world images captured from a stationary camera.
+
+## Instructions:
+
+1. **Camera Setup**:
+   - Place your camera (laptop or mobile phone) stationary on a table.
+   - Print out a chessboard calibration pattern (as shown in the tutorials linked below) and stick it on a hard, planar surface.
+   - Capture approximately **25 images** of the chessboard pattern in various orientations, ensuring the pattern is fully visible in each image. The pattern should cover all degrees of freedom in terms of rotation and translation. Make sure the corners in the chessboard are automatically detected and correctly identified using OpenCV functions.
+   
+   - **Links for tutorials**:
+     - [Link1](https://learnopencv.com/camera-calibration-using-opencv/)
+     - [Link2](https://boofcv.org/index.php?title=Tutorial_Camera_Calibration)
+
+2. **Tasks**:
+
+### 1. **Intrinsic Camera Parameters (5 points)**
+   - Report the **estimated intrinsic camera parameters**, which include:
+     - **Focal length(s)**
+     - **Skew parameter**
+     - **Principal point**
+   - Include error estimates if available for these parameters.
+
+### 2. **Extrinsic Camera Parameters (5 points)**
+   - Report the **estimated extrinsic camera parameters** for each selected image, including:
+     - **Rotation matrix**
+     - **Translation vector**
+
+### 3. **Radial Distortion Coefficients (5 points)**
+   - Report the **estimated radial distortion coefficients** for the camera.
+   - Use the radial distortion coefficients to **undistort** 5 of the raw images.
+   - Include the original and undistorted images in your report.
+   - Observe how straight lines at the corners of the images change after applying the distortion coefficients. Comment briefly on this observation.
+
+### 4. **Re-projection Error (5 points)**
+   - Compute and report the **re-projection error** for each of the 25 selected images using the estimated intrinsic and extrinsic parameters.
+   - Plot the re-projection error using a **bar chart**.
+   - Report the **mean** and **standard deviation** of the re-projection error.
+
+### 5. **Corner Detection and Re-projection (10 points)**
+   - Plot figures showing:
+     - The corners detected in the original images.
+     - The corners after re-projection onto the images for all the 25 images.
+   - Comment on how the re-projection error is computed and its significance.
+
+### 6. **Checkerboard Plane Normals (10 points)**
+   - Compute the **checkerboard plane normals** (`n_Ci`) for each of the 25 selected images in the **camera coordinate frame of reference** (`Oc`).
+
+---
+
+
+
 # Panorama-Generation
 
 This project involves generating a panorama by stitching together multiple images from a dataset. The steps outlined below will guide you through the key stages of the process, starting from feature detection to multi-image stitching.
